@@ -66,7 +66,7 @@ class="news__item">{{ article.title }}</li>
     
 created: function() {
     let self = this;
-        fetch('https://newsapi.org/v2/top-headlines country=us&apiKey=d6ef84ff80d34beba306f9eb0f26d426')
+        fetch('https://newsapi.org/v2/top-headlines country=us&apiKey=')
     .then(function(response) {
         return response.json();
     })
@@ -85,7 +85,7 @@ data: function() {
     methods: {
         searchNews: function() {
         let self = this;
-        fetch('https://newsapi.org/v2/everything?q='+ self.searchTerm + '&language=en&apiKey=d6ef84ff80d34beba306f9eb0f26d426')
+        fetch('https://newsapi.org/v2/everything?q='+ self.searchTerm + '&language=en&apiKey=')
         .then(function(response) {
             return response.json();
         })
