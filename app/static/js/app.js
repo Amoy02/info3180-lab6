@@ -22,9 +22,7 @@ template: `
     </nav>
 </header>    
 `,
- data: function() {
-      return {};
- }
+ data: function() {}
 });
 
 Vue.component('app-footer', {
@@ -36,43 +34,51 @@ template: `
 </footer>
 `,
 data: function() {
-return {
-    year: (new Date).getFullYear()
+    return {
+        year: (new Date).getFullYear()
 }
 }
-}
-})
+});
 
 const NewsList = Vue.component('news-list', {
 template: `
-
 <div class="news">
 <div class="form-inline d-flex justify-content-center">
     <div class="form-group mx-sm-3 mb-2">
         <label class="sr-only" for="search">Search</label>
         <input type="search" name="search" v-model="searchTerm" id="search" class="form-control mb-2 mr-sm-2" placeholder="Enter search term here" />
-        <button class="btn btn-primary mb-2" @click="searchNews">Search</button>
+        <button class="btn btn-primary mb-2" @click="searchNews">Search {{searchTerm}}</button>
     </div>
 </div>
-
-
-<h2>News</h2>
-<ul class="news__list">
-    <li v-for="article in articles"
-class="news__item">{{ article.title }}</li>
-</ul>
+<h2 class="text-center">News</h2>
+    <ul class="rows">
+    <li v-for="article in articles" class="pt-3 col-sm-4"> <div class="card pt-2 borderCol leftFix btmSpace">
+    <div class="card pt-2 borderCol leftFix btmSpace">
+    <div class="card-head pl-4">
+        <h5 class="card-title">{{ article.title }}</h5>
 </div>
-`, 
+
+    <div class="card-body">
+     <img class="card-img-top" :src= article.urlToImage />
+    </div>
+    <div class="card-footer noBorder">
+    <small>{{ article.description }}</small>
+    </div>
+</div>
+</div>
+    </li>
+     </ul>
+</div>
+    `, 
     
 created: function() {
-    let self = this;
-        fetch('https://newsapi.org/v2/top-headlines country=us&apiKey=')
+        fetch('https://newsapi.org/v2/top-headlines country=us&apiKey=<d6ef84ff80d34beba306f9eb0f26d426>')
     .then(function(response) {
         return response.json();
     })
     .then(function(data) {
             console.log(data);
-            self.articles = data.articles;
+            this.articles = data.articles;
     });
 },
 data: function() {
@@ -84,14 +90,13 @@ data: function() {
     
     methods: {
         searchNews: function() {
-        let self = this;
-        fetch('https://newsapi.org/v2/everything?q='+ self.searchTerm + '&language=en&apiKey=')
+        fetch('https://newsapi.org/v2/everything?q='+ self.searchTerm + '&language=en&apiKey=d6ef84ff80d34beba306f9eb0f26d426')
         .then(function(response) {
             return response.json();
         })
         .then(function(data) {
             console.log(data);
-            self.articles = data.articles;
+            this.articles = data.articles;
         });
      }
    } 
